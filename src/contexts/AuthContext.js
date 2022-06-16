@@ -1,14 +1,14 @@
 import { createContext, useReducer, useEffect } from "react";
+import { useSelector } from "react-redux";
 import apiService from "../app/apiService";
-import { isValidToken } from "../ultis/jwt";
 
 const initialState = {
-  isInitialized: "false",
-  isAuthenticated: "false",
+  isInitialized: false,
+  isAuthenticated: false,
   user: null,
 };
 
-const INITIALIZE = "AUTH.INITEALIZE";
+const INITIALIZE = "AUTH.INITIALIZE";
 const LOGIN_SUCCESS = "AUTH.LOGIN_SUCCESS";
 const REGISTER_SUCCESS = "AUTH.REGISTER_SUCCESS";
 const LOGOUT = "AUTH.LOGOUT";
@@ -22,12 +22,14 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
       };
+
     default:
       return state;
   }
 };
 
 const AuthContext = createContext({ ...initialState });
+
 const setSession = (accessToken) => {
   if (accessToken) {
     window.localStorage.setItem("accessToken", accessToken);
@@ -52,9 +54,13 @@ function AuthProvider({ children }) {
 
     callback();
   };
-
   return (
-    <AuthContext.Provider value={{ ...state, login }}>
+    <AuthContext.Provider
+      value={{
+        ...state,
+        login,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
