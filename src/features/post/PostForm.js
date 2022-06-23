@@ -1,5 +1,5 @@
 import React from "react";
-import { FTextField, FormProvider } from "../../components/form";
+import { FTextField, FormProvider, FUploadImage } from "../../components/form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -8,6 +8,7 @@ import { Box } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "./postSlice";
+import { useCallback } from "react";
 
 const yupSchema = Yup.object().shape({
   content: Yup.string().required("Content is required"),
@@ -32,9 +33,26 @@ function PostForm() {
 
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.post);
+
   const onSubmit = (data) => {
     dispatch(createPost(data)).then(() => reset());
   };
+
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
+
+      if (file) {
+        setValue(
+          "image",
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      }
+    },
+    [setValue]
+  );
 
   return (
     <Card sx={{ p: 3 }}>
@@ -53,7 +71,13 @@ function PostForm() {
               },
             }}
           />
-          <FTextField name="image" placeholder="Image" />
+          {/* <FTextField name="image" placeholder="Image" /> */}
+          <FUploadImage
+            name="image"
+            accept="image/*"
+            maxSize={3145728}
+            onDrop={handleDrop}
+          />
 
           <Box
             sx={{

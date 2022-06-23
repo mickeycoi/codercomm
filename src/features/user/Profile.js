@@ -13,7 +13,7 @@ function Profile({ profile }) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
-        <Stack>
+        <Stack spacing={2}>
           <ProfileScoreCard profile={profile} />
           <ProfileAbout profile={profile} />
           <ProfileSocialInfo profile={profile} />

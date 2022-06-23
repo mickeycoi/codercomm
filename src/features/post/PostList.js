@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PostCard from "./PostCard";
 import { getPosts } from "./postSlice";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Box } from "@mui/system";
 
@@ -16,11 +16,11 @@ function PostList({ userId }) {
 
   useEffect(() => {
     if (userId) dispatch(getPosts({ userId, page }));
-    console.log("userId", userId);
+    // console.log("userId", userId);
   }, [dispatch, userId, page]);
 
   return (
-    <div>
+    <Stack spacing={2}>
       {posts.map((post) => (
         <PostCard key={post._id} post={post} />
       ))}
@@ -38,7 +38,7 @@ function PostList({ userId }) {
           <Typography variant="h6">No Post Yet</Typography>
         )}
       </Box>
-    </div>
+    </Stack>
   );
 }
 
