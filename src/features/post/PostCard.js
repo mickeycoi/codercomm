@@ -8,23 +8,30 @@ import {
   Typography,
   CardHeader,
   IconButton,
+  Menu,
+  MenuItem,
+  Icon,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { fDate } from "../../utils/formatTime";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClearIcon from "@mui/icons-material/Clear";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import PostReaction from "./PostReaction";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
 import { deletePost } from "./postSlice";
+import EditDeleteButton from "../../components/EditDeleteButton";
 
 function PostCard({ post }) {
   const dispatch = useDispatch();
   const handleDeletePost = () => {
     dispatch(deletePost(post._id));
   };
+
   return (
     <Card>
       <CardHeader
@@ -51,11 +58,7 @@ function PostCard({ post }) {
             {fDate(post.createdAt)}
           </Typography>
         }
-        action={
-          <IconButton onClick={handleDeletePost}>
-            <ClearIcon sx={{ fontSize: 30 }} />
-          </IconButton>
-        }
+        action={<EditDeleteButton handleDelete={handleDeletePost} />}
       />
 
       <Stack spacing={2} sx={{ p: 3 }}>

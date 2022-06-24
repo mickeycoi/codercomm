@@ -47,6 +47,16 @@ const slice = createSlice({
       const { commentId, reactions } = action.payload;
       state.commentsById[commentId].reactions = reactions;
     },
+    deleteCommentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { _id, post } = action.payload;
+      state.commentsByPost = state.commentsByPost[post].filter(
+        (commentId) => commentId !== action.payload._id
+      );
+      state.commentsById[_id] = {};
+      state.totalCommentsByPost[post] -= 1;
+    },
   },
 });
 
@@ -111,3 +121,16 @@ export const sendCommentReaction =
       toast.error(error.message);
     }
   };
+
+export const deleteComment = (commentId) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.delete(`/comments/${commentId}`);
+    dispatch(slice.actions.deleteCommentSuccess(response.data.data));
+    // getComments({ postId: response.data.data.post });
+    toast.success("Delete successfully");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};

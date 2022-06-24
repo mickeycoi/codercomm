@@ -59,7 +59,7 @@ const slice = createSlice({
       state.currentPagePosts = state.currentPagePosts.filter(
         (postId) => postId !== action.payload
       );
-      state.postsById[action.payload] = null;
+      delete state.postsById[action.payload];
     },
   },
 });
