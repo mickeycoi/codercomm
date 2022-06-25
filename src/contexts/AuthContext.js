@@ -111,7 +111,7 @@ function AuthProvider({ children }) {
 
           const response = await apiService.get("/users/me");
           const user = response.data.data;
-          // console.log("user", response.data.data);
+          console.log("user", response.data.data);
           dispatch({
             type: INITIALIZE,
             payload: { isAuthenticated: true, user },
@@ -139,7 +139,7 @@ function AuthProvider({ children }) {
     };
 
     initialize();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (updatedProfile)

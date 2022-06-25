@@ -4,7 +4,7 @@ import { fDate } from "../../utils/formatTime";
 import CommentReaction from "./CommentReaction";
 import { useDispatch } from "react-redux";
 import { deleteComment } from "./commentSlice";
-import EditDeleteButton from "../../components/EditDeleteButton";
+import EditDeleteComment from "../comment/EditDeleteComment";
 
 function CommentCard({ comment }) {
   const dispatch = useDispatch();
@@ -35,7 +35,10 @@ function CommentCard({ comment }) {
           <CommentReaction comment={comment} />
         </Box>
       </Paper>
-      <EditDeleteButton handleDelete={handleDeleteComment} />
+      <EditDeleteComment
+        postId={comment._id}
+        handleDelete={handleDeleteComment}
+      />
     </Stack>
   );
 }

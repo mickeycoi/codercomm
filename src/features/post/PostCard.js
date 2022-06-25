@@ -24,7 +24,7 @@ import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
 import { deletePost } from "./postSlice";
-import EditDeleteButton from "../../components/EditDeleteButton";
+import EditDeletePost from "./EditDeletePost";
 
 function PostCard({ post }) {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ function PostCard({ post }) {
             {fDate(post.createdAt)}
           </Typography>
         }
-        action={<EditDeleteButton handleDelete={handleDeletePost} />}
+        action={<EditDeletePost handleDelete={handleDeletePost} />}
       />
 
       <Stack spacing={2} sx={{ p: 3 }}>

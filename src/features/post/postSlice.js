@@ -10,6 +10,7 @@ const initialState = {
   error: null,
   postsById: {},
   currentPagePosts: [],
+  totalPosts: 0,
 };
 
 const slice = createSlice({
@@ -31,6 +32,7 @@ const slice = createSlice({
         state.currentPagePosts.pop();
       state.postsById[newPost._id] = newPost;
       state.currentPagePosts.unshift(newPost._id);
+      state.totalPosts += 1;
     },
     getPostSuccess(state, action) {
       state.isLoading = false;
@@ -60,6 +62,14 @@ const slice = createSlice({
         (postId) => postId !== action.payload
       );
       delete state.postsById[action.payload];
+      state.totalPosts -= 1;
+    },
+    editPostSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const editedPost = action.payload;
+      state.postsById[editedPost._id].content = editedPost.content;
+      state.postsById[editedPost._id].image = editedPost.image;
     },
   },
 });
@@ -131,3 +141,21 @@ export const deletePost = (postId) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+export const editPost =
+  ({ postId, content, image }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading);
+    try {
+      const imageUrl = await cloudinaryUpload(image);
+      const response = await apiService.post(`/posts/${postId}`, {
+        content,
+        image: imageUrl,
+      });
+      dispatch(slice.actions.editPostSuccess(response.data.data));
+      console.log("edit", response.data.data);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };

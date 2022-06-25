@@ -7,6 +7,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 
 import Profile from "../features/user/Profile";
 import ProfileCover from "../features/user/ProfileCover";
@@ -14,6 +15,7 @@ import { capitalCase } from "change-case";
 import AddFriend from "../features/friend/AddFriend";
 import FriendRequests from "../features/friend/FriendRequests";
 import FriendList from "../features/friend/FriendList";
+import Waiting from "../features/friend/Waiting";
 
 const TabsWrapperStyle = styled("div")(({ theme }) => ({
   zIndex: 9,
@@ -33,6 +35,7 @@ const TabsWrapperStyle = styled("div")(({ theme }) => ({
 
 function HomePage() {
   const { user } = useAuth();
+
   const [currentTab, setCurrentTab] = useState("profile");
 
   const handleChangeTab = (newValue) => {
@@ -54,6 +57,11 @@ function HomePage() {
       value: "requests",
       icon: <ContactMailIcon sx={{ fontSize: 24 }} />,
       component: <FriendRequests />,
+    },
+    {
+      value: "waiting",
+      icon: <EmojiPeopleIcon sx={{ fontSize: 24 }} />,
+      component: <Waiting />,
     },
     {
       value: "add_friend",
