@@ -7,7 +7,7 @@ import { alpha, Button, Card, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
-import { editPost } from "./postSlice";
+import { editPost, createPost } from "./postSlice";
 import { useCallback } from "react";
 
 const yupSchema = Yup.object().shape({
@@ -19,7 +19,7 @@ const defaultValues = {
   image: "",
 };
 
-function EditPostForm({ handleCloseEdit }) {
+function EditPostForm({ handleCloseEdit, postId, handleMenuClose }) {
   const methods = useForm({
     resolver: yupResolver(yupSchema),
     defaultValues,
@@ -35,7 +35,9 @@ function EditPostForm({ handleCloseEdit }) {
   const { isLoading } = useSelector((state) => state.post);
 
   const onSubmit = (data) => {
-    dispatch(editPost(data)).then(() => reset());
+    dispatch(editPost({ postId: postId, ...data })).then(() => reset());
+    handleCloseEdit();
+    handleMenuClose();
   };
 
   const handleDrop = useCallback(
@@ -63,7 +65,7 @@ function EditPostForm({ handleCloseEdit }) {
             multiline
             fullWidth
             rows={4}
-            placeholder="Share what you are thinking here..."
+            placeholder="Edit your old post here..."
             sx={{
               "& fieldset": {
                 borderWidth: `1px !important`,

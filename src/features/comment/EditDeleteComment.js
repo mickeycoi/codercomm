@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import EditCommentForm from "./EditCommentForm";
 
-function EditDeleteComment({ handleDelete, handleEdit, postId }) {
+function EditDeleteComment({ handleDelete, handleEdit, commentId }) {
   // Handel Modal Edit
   // **handle delete
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -139,8 +139,9 @@ function EditDeleteComment({ handleDelete, handleEdit, postId }) {
             <Stack spacing={2}>
               <Typography variant="h5">Edit you post here </Typography>
               <EditCommentForm
-                postId={postId}
+                commentId={commentId}
                 handleCloseEdit={handleCloseEdit}
+                handleMenuClose={handleMenuClose}
               />
             </Stack>
           </Box>

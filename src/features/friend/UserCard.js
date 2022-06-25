@@ -29,7 +29,7 @@ function UserCard({ profile }) {
           component={RouterLink}
           to={`/user/${targetUserId}`}
         >
-          {name}
+          <Typography noWrap>{name}</Typography>
         </Link>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <EmailRoundedIcon

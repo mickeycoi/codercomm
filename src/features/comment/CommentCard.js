@@ -36,7 +36,7 @@ function CommentCard({ comment }) {
         </Box>
       </Paper>
       <EditDeleteComment
-        postId={comment._id}
+        commentId={comment._id}
         handleDelete={handleDeleteComment}
       />
     </Stack>

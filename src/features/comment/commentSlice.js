@@ -57,6 +57,12 @@ const slice = createSlice({
       delete state.commentsById[_id];
       state.totalCommentsByPost[post] -= 1;
     },
+    editCommentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { _id, content } = action.payload;
+      state.commentsById[_id].content = content;
+    },
   },
 });
 
@@ -134,3 +140,20 @@ export const deleteComment = (commentId) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+export const editComment =
+  ({ commentId, content }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await apiService.put(`/comments/${commentId}`, {
+        content,
+      });
+      dispatch(slice.actions.editCommentSuccess(response.data.data));
+      // getComments({ postId: response.data.data.post });
+      toast.success("Edit successfully");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };

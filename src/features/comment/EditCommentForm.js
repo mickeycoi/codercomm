@@ -5,17 +5,18 @@ import SendIcon from "@mui/icons-material/Send";
 
 import useAuth from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
-import { createComment } from "./commentSlice";
+import { editComment } from "./commentSlice";
 
-function EditCommentForm({ postId, handleCloseEdit }) {
+function EditCommentForm({ commentId, handleCloseEdit, handleMenuClose }) {
   const { user } = useAuth();
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createComment({ postId, content }));
-    setContent("");
+    dispatch(editComment({ commentId: commentId, content: content }));
+    handleCloseEdit();
+    handleMenuClose();
   };
 
   return (

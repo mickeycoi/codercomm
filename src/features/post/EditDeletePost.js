@@ -13,10 +13,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import PostForm from "./PostForm";
 import EditPostForm from "./EditPostForm";
 
-function EditDeletePost({ handleDelete, handleEdit }) {
+function EditDeletePost({ handleDelete, postId }) {
   // Handel Modal Edit
   // **handle delete
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -138,8 +137,12 @@ function EditDeletePost({ handleDelete, handleEdit }) {
         >
           <Box sx={style}>
             <Stack spacing={2}>
-              <Typography variant="h5">Edit you post here </Typography>
-              <EditPostForm handleCloseEdit={handleCloseEdit} />
+              <Typography variant="h5">Edit your post here </Typography>
+              <EditPostForm
+                handleCloseEdit={handleCloseEdit}
+                postId={postId}
+                handleMenuClose={handleMenuClose}
+              />
             </Stack>
           </Box>
         </Modal>

@@ -148,12 +148,12 @@ export const editPost =
     dispatch(slice.actions.startLoading);
     try {
       const imageUrl = await cloudinaryUpload(image);
-      const response = await apiService.post(`/posts/${postId}`, {
+      const response = await apiService.put(`/posts/${postId}`, {
         content,
         image: imageUrl,
       });
       dispatch(slice.actions.editPostSuccess(response.data.data));
-      console.log("edit", response.data.data);
+      toast.success("Edit post success");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);

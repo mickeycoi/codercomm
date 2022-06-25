@@ -139,7 +139,7 @@ function AuthProvider({ children }) {
     };
 
     initialize();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (updatedProfile)
